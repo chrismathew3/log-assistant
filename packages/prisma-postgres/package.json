@@ -1,0 +1,25 @@
+{
+  "name": "prisma-postgres",
+  "license": "MIT",
+  "scripts": {
+    "queries": "ts-node ./src/queries.ts",
+    "caching": "ts-node ./src/caching.ts",
+    "generate-erd": "pnpm exec prisma generate",
+    "generate": "DISABLE_ERD=true pnpm prisma generate",
+    "migrate-dev": "DISABLE_ERD=true pnpm exec prisma migrate dev --create-only",
+    "migrate": "pnpm exec prisma migrate deploy",
+    "status": "pnpm exec prisma migrate status",
+    "studio": "pnpm exec prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "6.5.0",
+    "@prisma/extension-accelerate": "1.2.2",
+    "@types/node": "22.13.10",
+    "dotenv": "16.4.7"
+  },
+  "devDependencies": {
+    "prisma": "6.5.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.2"
+  }
+}
