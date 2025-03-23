@@ -6,9 +6,9 @@ export const getRoutes = (): Array<string> => {
   const routes: Array<any> = [];
 
   app._router.stack.forEach((middleware: any) => {
-    if (middleware.route) { // routes registered directly on the app
+    if (middleware.route) { 
       routes.push(middleware.route);
-    } else if (middleware.name === 'router') { // router middleware 
+    } else if (middleware.name === 'router') { 
       middleware.handle.stack.forEach((handler: any) => {
         route = handler.route;
         route && routes.push(route);

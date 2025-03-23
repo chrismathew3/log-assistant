@@ -1,6 +1,7 @@
 {
-  "name": "prisma-postgres",
+  "name": "@workspace/prisma-postgres",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "queries": "ts-node ./src/queries.ts",
     "caching": "ts-node ./src/caching.ts",

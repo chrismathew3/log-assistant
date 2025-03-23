@@ -175,3 +175,40 @@
   }
 }
 
+@layer utilities {
+  @keyframes typing {
+    0% {
+      width: 0ch;
+    }
+    100% {
+      width: 11ch;
+    }
+  }
+
+  @keyframes cursor {
+    0%, 50% {
+      border-color: transparent;
+    }
+    51%, 100% {
+      border-color: currentColor;
+    }
+  }
+
+  .animate-typing {
+    animation: typing 2s steps(11) forwards; 
+  }
+
+  .animate-cursor {
+    animation: cursor 0.8s infinite step-end alternate;
+  }
+}
+
+@layer utilities {
+  .typing-effect {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid currentColor; 
+  }
+}
+
