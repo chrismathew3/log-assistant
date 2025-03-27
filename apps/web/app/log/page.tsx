@@ -12,12 +12,22 @@ const LogPage = () => {
         // Mutate data
       }
 
+      const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (
+          (e.ctrlKey || e.metaKey) &&
+          (e.key === 'Enter' || e.key === 'NumpadEnter')
+        ) {
+          e.preventDefault()
+          e.currentTarget.form?.requestSubmit()
+        }
+      }
+
     return (
         <div className="flex items-center justify-center min-h-svh ">
             <div className="flex flex-col items-center justify-center gap-5">
                 <Label className="text-xl font-bold" htmlFor="logs">what can i help you with?</Label>
                 <div className="min-w-[40rem] flex flex-col gap-2 relative ">
-                    <Textarea className="pr-12" id="logs" placeholder={'paste your logs here'} />
+                    <Textarea className="pr-12" id="logs" placeholder={'paste your logs here'} onKeyDown={handleKeyDown}/>
                     <p className="text-sm text-muted-foreground">
                         powered by llm's to help come up with useful insights
                     </p>
