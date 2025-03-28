@@ -1,0 +1,1 @@
+export const BUCKET_NAME = process.env.LOGS_BUCKET_NAME || 'logassistantbucket'

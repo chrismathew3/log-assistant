@@ -9,3 +9,23 @@ export interface PaginatedLogs {
   page: number;
   pageSize: number;
 }
+
+export interface UseSearchLogsParams {
+  searchQuery: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface UseGetLogsParams {
+  page?: number;
+  pageSize?: number;
+}
+
+export interface CreateLogArg {
+  rawText: string;
+}
+
+export interface LogEntryWithUrl extends LogEntry {
+  presignedUrl?: string | null;
+}
+

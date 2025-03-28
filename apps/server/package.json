@@ -21,22 +21,24 @@
     "@types/node": "^14.18.63",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "@workspace/openai-llm": "workspace:*",
     "@workspace/prisma-postgres": "workspace:*",
     "@workspace/s3-uploader": "workspace:*",
-    "@workspace/openai-llm": "workspace:*",
     "eslint": "^7.32.0",
     "nodemon": "^2.0.22",
+    "pino-pretty": "^13.0.0",
     "ts-node": "^9.1.1"
   },
   "dependencies": {
+    "@workspace/openai-llm": "workspace:*",
+    "@workspace/prisma-postgres": "workspace:*",
+    "@workspace/s3-uploader": "workspace:*",
     "cors": "^2.8.5",
     "env-cmd": "^10.1.0",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",
     "helmet": "^4.6.0",
     "morgan": "^1.10.0",
-    "@workspace/prisma-postgres": "workspace:*",
-    "@workspace/s3-uploader": "workspace:*",
-    "@workspace/openai-llm": "workspace:*"
+    "pino": "^9.6.0"
   }
 }

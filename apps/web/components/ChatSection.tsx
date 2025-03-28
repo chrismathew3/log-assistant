@@ -1,42 +1,42 @@
-"use client";
+"use client"
+import React, { useState, ChangeEvent } from "react"
+import { Textarea } from "@workspace/ui/components/textarea"
+import { Label } from "@workspace/ui/components/label"
+import { Button } from "@workspace/ui/components/button"
+import { Send } from "lucide-react"
+import { Skeleton } from "@workspace/ui/components/skeleton"
+import { useCreateLog } from "@/hooks/useCreateLog"
 
-import React from "react";
-import { Textarea } from "@workspace/ui/components/textarea";
-import { Label } from "@workspace/ui/components/label";
-import { Button } from "@workspace/ui/components/button";
-import { Send } from "lucide-react";
-// Example: Adjust to your actual import path
-import { useCreateLog } from "../hooks/useCreateLog";
+interface ChatSectionProps {
+  onLogCreated?: (id: number) => void
+}
 
-export function ChatSection() {
-  const [logsInput, setLogsInput] = React.useState("");
+export const ChatSection = ({ onLogCreated }: ChatSectionProps) => {
+  const [logsInput, setLogsInput] = useState("")
+  const { createLog, data, error, isMutating } = useCreateLog()
 
-  // This is where you'd import your createLog mutation hook
-  const { createLog, data, error, isMutating } = useCreateLog();
-
-  /**
-   * Named function to handle text changes.
-   */
-  function handleLogsChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setLogsInput(event.target.value);
+  const handleLogsChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setLogsInput(event.target.value)
   }
 
-  /**
-   * Named function to handle sending logs.
-   */
-  function handleSendLogs() {
-    if (!logsInput.trim()) return;
-
-    // Call our SWR mutation or fetch request here
+  const handleSendLogs = () => {
+    if (!logsInput.trim()) return
     createLog(logsInput)
-      .then(() => {
-        // Optionally clear input or handle success
-        setLogsInput("");
+      .then((newLog) => {
+        setLogsInput("")
+        onLogCreated?.(newLog.id) 
       })
-      .catch((err) => {
-        // Handle error or display feedback
-        console.error("Error creating log:", err);
-      });
+      .catch(err => console.error("Error creating log:", err))
+  }
+
+  if (isMutating) {
+    return (
+      <div className="p-4 space-y-2">
+        <Skeleton className="h-5 w-1/2" />
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-1/2" />
+      </div>
+    )
   }
 
   return (
@@ -50,7 +50,7 @@ export function ChatSection() {
             id="logs"
             placeholder="Paste your logs here"
             value={logsInput}
-            onChange={handleLogsChange} // Named function
+            onChange={handleLogsChange}
             className="pr-12"
           />
           <p className="text-sm text-muted-foreground">
@@ -61,12 +61,11 @@ export function ChatSection() {
             size="icon"
             className="absolute right-2 top-2"
             disabled={!logsInput.trim() || isMutating}
-            onClick={handleSendLogs} // Named function
+            onClick={handleSendLogs}
           >
             <Send className="w-4 h-4" />
           </Button>
         </div>
-
         {error && (
           <p className="text-sm text-destructive">
             Error creating log: {(error as Error).message}
@@ -79,5 +78,5 @@ export function ChatSection() {
         )}
       </div>
     </div>
-  );
+  )
 }

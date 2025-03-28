@@ -1,38 +1,39 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@workspace/ui/components/breadcrumb";
-import { Separator } from "@workspace/ui/components/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@workspace/ui/components/sidebar";
+import React, { useState } from "react"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@workspace/ui/components/breadcrumb"
+import { Separator } from "@workspace/ui/components/separator"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@workspace/ui/components/sidebar"
+import { AppSidebar } from "@/components/Sidebar"
+import { ChatSection } from "@/components/ChatSection"
+import { LogDetails } from "@/components/LogDetails"
+import { useGetLog } from "@/hooks/useGetLog"
 
-import { LogDetails } from "../../components/LogDetails";
-import { LogEntry } from "@workspace/prisma-postgres";
-import { ChatSection } from "@/components/ChatSection";
-import { AppSidebar } from "@/components/Sidebar";
+const LogsPage = () => {
+  const [selectedLogId, setSelectedLogId] = useState<number | null>(null)
+  
+  const { data: selectedLog, isLoading: isLogLoading } = useGetLog(selectedLogId || undefined)
 
+  const handleSidebarSelect = (logId: number) => {
+    setSelectedLogId(logId)
+  }
 
-export default function LogsPage() {
-  const [selectedLog, setSelectedLog] = React.useState<LogEntry | null>(null);
+  const handleNewLogCreated = (newLogId: number) => {
+    setSelectedLogId(newLogId)
+  }
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "350px",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar onSelectLog={(log) => setSelectedLog(log)} />
-
+    <SidebarProvider style={{ "--sidebar-width": "350px" } as React.CSSProperties}>
+      <AppSidebar onSelectLog={handleSidebarSelect} />
       <SidebarInset>
-        <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+        <header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
-          {selectedLog &&
+          {selectedLog && (
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">All Inboxes</BreadcrumbLink>
+                  All Logs
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
@@ -40,17 +41,22 @@ export default function LogsPage() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-          }
+          )}
         </header>
-
         <div className="flex flex-1 flex-col p-4">
-          {!selectedLog ? (
-            <ChatSection />
+          {!selectedLogId ? (
+            <ChatSection onLogCreated={handleNewLogCreated} />
           ) : (
-            <LogDetails log={selectedLog} onDeselect={() => setSelectedLog(null)} />
+            <LogDetails
+              log={selectedLog}
+              isLoading={isLogLoading}
+              onDeselect={() => setSelectedLogId(null)}
+            />
           )}
         </div>
       </SidebarInset>
     </SidebarProvider>
-  );
+  )
 }
+
+export default LogsPage
