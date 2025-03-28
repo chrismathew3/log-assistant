@@ -23,14 +23,15 @@ This repository is a Turborepo–based monorepo for building a full‐stack “l
 Quick Start
 -----------
 
-1. run `node >= 20` and install `pnpm` if you dont have it already it will change your life :p
+1. run `node >= 20` (18 should be fine tbh) and install `pnpm` if you dont have it already it will change your life :p
 2. `pnpm i` in the root of the monorepo
-3. `.env` to both the `server` / `web` folders in their root respectively
-4. `pnpm run generate` in the root of the monorepo
-5. `pnpm run build` This compiles the shared libraries (openai-llm, s3-uploader, ui, etc.) so they can be consumed by apps/server and apps/web.
-    
+3. add an `.env` to both the `server` / `web` folders in their root respectively (server is the more important one as it contains the db string)
+4. `pnpm run generate` in the prism-postgres to generate types
+5. `pnpm run build` in the root of the monorepo this compiles the shared libraries (openai-llm, s3-uploader, ui, etc.) so they can be consumed by apps/server and apps/web.
 6.  open a terminal for each web & server and run `pnpm dev` in each 
-7.  you should be good now :)
+7.  localhost:300 in browser and you should be good now :)
+
+** if you run into any issues please just reach out there might be some prisma commands you need to run see the readme there if having prisma issues **
     
 
 Using shadcn/ui in the ui Package
