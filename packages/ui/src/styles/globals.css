@@ -117,7 +117,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -209,6 +208,15 @@
     white-space: nowrap;
     overflow: hidden;
     border-right: 2px solid currentColor; 
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 

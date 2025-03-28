@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./build/src/index.js",
-    "dev": "ts-node ./src/index.ts",
+    "dev": "ts-node ./src/index.ts --watch",
     "dev:nodemon": "nodemon -w src -e ts,json -x ts-node ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +22,8 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@workspace/prisma-postgres": "workspace:*",
+    "@workspace/s3-uploader": "workspace:*",
+    "@workspace/openai-llm": "workspace:*",
     "eslint": "^7.32.0",
     "nodemon": "^2.0.22",
     "ts-node": "^9.1.1"
@@ -33,6 +35,8 @@
     "fs": "^0.0.1-security",
     "helmet": "^4.6.0",
     "morgan": "^1.10.0",
-    "@workspace/prisma-postgres": "workspace:*"
+    "@workspace/prisma-postgres": "workspace:*",
+    "@workspace/s3-uploader": "workspace:*",
+    "@workspace/openai-llm": "workspace:*"
   }
 }

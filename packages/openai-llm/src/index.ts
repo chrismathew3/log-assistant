@@ -6,12 +6,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-/**
- * Summarizes log text using OpenAI ChatCompletion.
- *
- * @param rawLogs - The raw logs in plain text
- * @returns A string summary of the logs
- */
+
 export async function summarizeLogs(rawLogs: string): Promise<string> {
   try {
     const response = await openai.createChatCompletion({

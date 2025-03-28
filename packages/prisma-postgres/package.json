@@ -1,10 +1,10 @@
 {
   "name": "@workspace/prisma-postgres",
   "license": "MIT",
-  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "queries": "ts-node ./src/queries.ts",
-    "caching": "ts-node ./src/caching.ts",
+    "build": "pnpm run generate && tsc",
     "generate-erd": "pnpm exec prisma generate",
     "generate": "DISABLE_ERD=true pnpm prisma generate",
     "migrate-dev": "DISABLE_ERD=true pnpm exec prisma migrate dev --create-only",

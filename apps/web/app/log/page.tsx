@@ -1,49 +1,56 @@
-import { Textarea } from "@workspace/ui/components/textarea";
-import { Label } from "@workspace/ui/components/label"
-import React from "react";
-import { Button } from "@workspace/ui/components/button";
-import { Send } from "lucide-react";
+"use client";
+
+import * as React from "react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@workspace/ui/components/breadcrumb";
+import { Separator } from "@workspace/ui/components/separator";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@workspace/ui/components/sidebar";
+
+import { LogDetails } from "../../components/LogDetails";
+import { LogEntry } from "@workspace/prisma-postgres";
+import { ChatSection } from "@/components/ChatSection";
+import { AppSidebar } from "@/components/Sidebar";
 
 
-const LogPage = () => {
+export default function LogsPage() {
+  const [selectedLog, setSelectedLog] = React.useState<LogEntry | null>(null);
 
-    async function createLog() {
-        'use server'
-        // Mutate data
+  return (
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "350px",
+        } as React.CSSProperties
       }
+    >
+      <AppSidebar onSelectLog={(log) => setSelectedLog(log)} />
 
-      const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (
-          (e.ctrlKey || e.metaKey) &&
-          (e.key === 'Enter' || e.key === 'NumpadEnter')
-        ) {
-          e.preventDefault()
-          e.currentTarget.form?.requestSubmit()
-        }
-      }
+      <SidebarInset>
+        <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          {selectedLog &&
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">All Inboxes</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{selectedLog.id}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          }
+        </header>
 
-    return (
-        <div className="flex items-center justify-center min-h-svh ">
-            <div className="flex flex-col items-center justify-center gap-5">
-                <Label className="text-xl font-bold" htmlFor="logs">what can i help you with?</Label>
-                <div className="min-w-[40rem] flex flex-col gap-2 relative ">
-                    <Textarea className="pr-12" id="logs" placeholder={'paste your logs here'} onKeyDown={handleKeyDown}/>
-                    <p className="text-sm text-muted-foreground">
-                        powered by llm's to help come up with useful insights
-                    </p>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-2 top-2"
-                        disabled={true}
-                    >
-                        <Send className="w-4 h-4" />
-                    </Button>
-                </div>
-            </div>
+        <div className="flex flex-1 flex-col p-4">
+          {!selectedLog ? (
+            <ChatSection />
+          ) : (
+            <LogDetails log={selectedLog} onDeselect={() => setSelectedLog(null)} />
+          )}
         </div>
-    )
+      </SidebarInset>
+    </SidebarProvider>
+  );
 }
-
-
-export default LogPage;

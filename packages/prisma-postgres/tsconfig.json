@@ -1,9 +1,19 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
-    "outDir": "dist",
-    "strict": true,
-    "lib": ["esnext"],
-    "esModuleInterop": true
-  }
+    // Core compilation settings
+    "rootDir": "src",         // Your source files live in ./src
+    "outDir": "dist",         // Compiled .js files go to ./dist
+    "module": "CommonJS",     // Emit CommonJS modules
+    "target": "ES2020",       // Reasonable target for modern Node
+    // Common TypeScript best-practice flags
+    "strict": true,           // Enable all strict type checks
+    "esModuleInterop": true,  // Required for default imports on CJS modules
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,     // Faster build by skipping d.ts checks
+    // Optional flags
+    "declaration": true,      // Emit .d.ts type declaration files
+    "sourceMap": false        // Or true if you need source maps
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
