@@ -23,17 +23,13 @@ This repository is a Turborepo–based monorepo for building a full‐stack “l
 Quick Start
 -----------
 
-1.  **Set up the Postgres DB**
+1. `pnpm i` in the root of the monorepo
+2. `.env` to both the `server` / `web` folders in their root respectively
+3. `pnpm run generate` in the root of the monorepo
+4. `pnpm run build` This compiles the shared libraries (openai-llm, s3-uploader, ui, etc.) so they can be consumed by apps/server and apps/web.
     
-    *   The Prisma schema expects a valid Postgres connection. By default, the schema is hosted with Prisma’s Data Proxy or a local Postgres instance. Make sure you have your DATABASE\_URL set in .env.
-        
-2.  `pnpm install`
-    
-3.  # from the root `pnpm --filter @workspace/prisma-postgres run migrate-dev` This will run Prisma migrations against your Postgres database.
-    
-4.  `pnpm run build` This compiles the shared libraries (openai-llm, s3-uploader, ui, etc.) so they can be consumed by apps/server and apps/web.
-    
-5.  `pnpm run dev` By default, apps/server (Node/Express) will start on port 8080. apps/web (Next.js) will start on port 3000. You can then open [http://localhost:3000](http://localhost:3000) to view the UI and submit logs.
+5.  open a terminal for each web & server and run `pnpm dev` in each 
+6.  you should be good now :)
     
 
 Using shadcn/ui in the ui Package
@@ -49,6 +45,16 @@ This will generate the selected component(s) in packages/ui/src/components/, rea
 
 Your Tailwind setup (tailwind.config.ts and globals.css) is already configured to style these components.
 
+Baic Architecture
+----------------
+* Next JS frontend with SWR for Caching
+* Node/Express Backend
+* Prisma for ORM + Hosted Postgres for convenience
+* S3 to store the raw text - logs can be long and blob storage is cheap
+* Store inights in the db + metadata for S3
+* OpenAI for llm stuff
+* Modular Monolith Architecture (put things in packages so that we get _some_ loose coupling)
+* Monorepo = shared packages and single JS / TS environment + faster dev
 
 Additional Notes
 ----------------
@@ -56,17 +62,13 @@ Additional Notes
 *   **Environment Variables**
     
     *   DATABASE\_URL is required for Prisma.
-        
     *   AWS\_ACCESS\_KEY\_ID, AWS\_SECRET\_ACCESS\_KEY, and S3\_BUCKET\_NAME for the S3 uploader.
-        
     *   OPENAI\_API\_KEY for OpenAI usage.
         
 *   **Deployment**
     
     *   The Express server can be containerized or hosted on any Node environment.
-        
     *   The Next.js app can be deployed to Vercel or another hosting service.
-        
     *   Ensure all environment variables are set in your production environment.
         
 
