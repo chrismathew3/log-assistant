@@ -45,7 +45,7 @@ This will generate the selected component(s) in packages/ui/src/components/, rea
 
 Your Tailwind setup (tailwind.config.ts and globals.css) is already configured to style these components.
 
-Baic Architecture
+Basic Architecture
 ----------------
 * Next JS frontend with SWR for Caching
 * Node/Express Backend
