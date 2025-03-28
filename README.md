@@ -23,13 +23,14 @@ This repository is a Turborepo–based monorepo for building a full‐stack “l
 Quick Start
 -----------
 
-1. `pnpm i` in the root of the monorepo
-2. `.env` to both the `server` / `web` folders in their root respectively
-3. `pnpm run generate` in the root of the monorepo
-4. `pnpm run build` This compiles the shared libraries (openai-llm, s3-uploader, ui, etc.) so they can be consumed by apps/server and apps/web.
+1. run `node >= 20` and install `pnpm` if you dont have it already it will change your life :p
+2. `pnpm i` in the root of the monorepo
+3. `.env` to both the `server` / `web` folders in their root respectively
+4. `pnpm run generate` in the root of the monorepo
+5. `pnpm run build` This compiles the shared libraries (openai-llm, s3-uploader, ui, etc.) so they can be consumed by apps/server and apps/web.
     
-5.  open a terminal for each web & server and run `pnpm dev` in each 
-6.  you should be good now :)
+6.  open a terminal for each web & server and run `pnpm dev` in each 
+7.  you should be good now :)
     
 
 Using shadcn/ui in the ui Package
